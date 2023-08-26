@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 import "./App.css";
 import { Canvas } from "./components/canvas/Canvas";
 import { ControlPanel } from "./components/control-panel/ControlPanel";
+import { BrushContextProvider } from "./components/context/BrushContext";
 
 const MainPageWrapper = styled.div`
   display: flex;
@@ -11,13 +12,12 @@ const MainPageWrapper = styled.div`
 `;
 
 function App() {
-  //main view
-  //2 coponents main canvas and controls
-  //paint wrapper pads in and looks like paper
   return (
     <MainPageWrapper>
+      <BrushContextProvider>
       <Canvas></Canvas>
       <ControlPanel></ControlPanel>
+      </BrushContextProvider>
     </MainPageWrapper>
   );
 }

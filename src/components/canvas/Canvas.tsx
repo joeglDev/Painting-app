@@ -1,6 +1,7 @@
 import { styled } from "styled-components";
-import { MouseEvent, useEffect, useRef, useState } from "react";
+import { MouseEvent, useContext, useEffect, useRef, useState } from "react";
 import { DrawingArea } from "./DrawingArea.style";
+import { BrushContext } from "../context/BrushContext";
 
 const CanvasWrapper = styled.section`
   flex: 80;
@@ -11,11 +12,12 @@ export const Canvas = () => {
   const [canvasCTX, setCanvasCTX] = useState<CanvasRenderingContext2D | null>(
     null,
   );
-  const [color, setColor] = useState("#000000"); // Default color is black
-  const [size, setSize] = useState(10); // Default size is 10
+
   const canvasRef = useRef(
     document.getElementById("canvas") as HTMLCanvasElement,
   );
+
+  const {colour, setColour, size, setSize} = useContext(BrushContext);
 
   // set position of the mouse
   const SetPos = (e: MouseEvent) => {
@@ -38,7 +40,7 @@ export const Canvas = () => {
       ctx!.moveTo(mouseData.x, mouseData.y * 0.8); // Move the line to the saved mouse location
       ctx!.lineTo(e.clientX, e.clientY * 0.8); // off set for margins
 
-      ctx!.strokeStyle = color; // Set the color as the saved state
+      ctx!.strokeStyle = colour; // Set the color as the saved state
       ctx!.lineWidth = size; // Set the size to the saved state
       // Set the line cap to round
       ctx!.lineCap = "round";
