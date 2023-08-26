@@ -1,12 +1,11 @@
 import { styled } from "styled-components";
 
-export const CanvasWrapper = styled.div`
+export const DrawingArea = styled.canvas`
   position: relative;
-  margin: 2.5rem auto;
-  width: 100%;
-  height: 95%;
   background: #fff;
   border-radius: 0.125rem;
+  height: 100vh;
+  width: 80vw;
 
   &::before,
   &::after {
