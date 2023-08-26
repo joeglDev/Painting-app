@@ -1,14 +1,15 @@
 import { styled } from "styled-components";
+import { DrawingArea } from "./DrawingArea";
 
 const CanvasWrapper = styled.section`
 flex: 80;
-padding: 1rem;
+padding: 4rem;
 `;
 
 export const Canvas = () => {
     return (
         <CanvasWrapper>
-            <h2>canvas</h2>
+            <DrawingArea></DrawingArea>
         </CanvasWrapper>
     ) 
 }

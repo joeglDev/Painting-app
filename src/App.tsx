@@ -1,7 +1,7 @@
 import { styled } from 'styled-components'
 import './App.css'
-import { Canvas } from './components/Canvas'
-import { ControlPanel } from './components/ControlPanel'
+import { Canvas } from './components/canvas/Canvas'
+import { ControlPanel } from './components/control-panel/ControlPanel'
 
 const MainPageWrapper = styled.div`
 display: flex;
