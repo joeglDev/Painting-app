@@ -17,7 +17,7 @@ export const Canvas = () => {
     document.getElementById("canvas") as HTMLCanvasElement,
   );
 
-  const {colour, setColour, size, setSize} = useContext(BrushContext);
+  const { colour, setColour, size, setSize } = useContext(BrushContext);
 
   // set position of the mouse
   const SetPos = (e: MouseEvent) => {
@@ -30,29 +30,27 @@ export const Canvas = () => {
   const Draw = (e: MouseEvent) => {
     if (e.buttons !== 1) return;
     const ctx = canvasCTX; // Our saved context
-    if (ctx) {
-      ctx!.beginPath(); // Start the line
+    ctx!.beginPath(); // Start the line
 
-      setMouseData({
-        x: e.clientX,
-        y: e.clientY, // off set for margins
-      });
-      ctx!.moveTo(mouseData.x, mouseData.y * 0.8); // Move the line to the saved mouse location
-      ctx!.lineTo(e.clientX, e.clientY * 0.8); // off set for margins
+    setMouseData({
+      x: e.clientX,
+      y: e.clientY, // off set for margins
+    });
+    ctx!.moveTo(mouseData.x, mouseData.y * 0.8); // Move the line to the saved mouse location
+    ctx!.lineTo(e.clientX, e.clientY * 0.8); // off set for margins
 
-      ctx!.strokeStyle = colour; // Set the color as the saved state
-      ctx!.lineWidth = size; // Set the size to the saved state
-      // Set the line cap to round
-      ctx!.lineCap = "round";
-      ctx!.stroke(); // Draw it!
-    }
+    ctx!.strokeStyle = colour; // Set the color as the saved state
+    ctx!.lineWidth = size; // Set the size to the saved state
+    // Set the line cap to round
+    ctx!.lineCap = "round";
+    ctx!.stroke(); // Draw it!
   };
 
   // Set the canvas ctx as the state
   useEffect(() => {
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth * 0.8; //this will need updating
+    canvas.width = window.innerWidth * 0.8; //accounts for canvas width being 80% of screen width
     canvas.height = window.innerHeight * 0.8;
     setCanvasCTX(ctx);
   }, [canvasRef]);

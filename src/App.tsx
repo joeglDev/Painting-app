@@ -15,8 +15,8 @@ function App() {
   return (
     <MainPageWrapper>
       <BrushContextProvider>
-      <Canvas></Canvas>
-      <ControlPanel></ControlPanel>
+        <Canvas></Canvas>
+        <ControlPanel></ControlPanel>
       </BrushContextProvider>
     </MainPageWrapper>
   );

@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { BrushSettings } from "./BrushSettings";
 
 const ControlPanelWrapper = styled.section`
   flex: 20;
@@ -9,7 +10,7 @@ const ControlPanelWrapper = styled.section`
 export const ControlPanel = () => {
   return (
     <ControlPanelWrapper>
-      <h1>controls here</h1>
+      <BrushSettings></BrushSettings>
     </ControlPanelWrapper>
   );
 };
