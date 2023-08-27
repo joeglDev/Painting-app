@@ -5,8 +5,6 @@ interface defaultValueInterface {
   setColour: (value: string) => void;
   size: number;
   setSize: (value: number) => void;
-  opacity: number;
-  setOpacity: (value: number) => void;
 }
 
 const defaultValue: defaultValueInterface = {
@@ -14,16 +12,13 @@ const defaultValue: defaultValueInterface = {
   setColour: () => {},
   size: 10,
   setSize: () => {},
-  opacity: 1,
-  setOpacity: () => {},
 };
 
 export const BrushContext = createContext(defaultValue);
 
 export const BrushContextProvider = ({ children }: { children: ReactNode }) => {
-  const [colour, setColour] = useState(defaultValue.colour); 
-  const [size, setSize] = useState(defaultValue.size);
-  const [opacity, setOpacity] =useState(defaultValue.opacity);
+  const [colour, setColour] = useState(defaultValue.colour); // Default color is black
+  const [size, setSize] = useState(defaultValue.size); // Default size is 10
 
   return (
     <BrushContext.Provider
@@ -32,8 +27,6 @@ export const BrushContextProvider = ({ children }: { children: ReactNode }) => {
         setColour,
         size,
         setSize,
-        opacity,
-        setOpacity
       }}
     >
       {children}

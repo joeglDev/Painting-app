@@ -8,7 +8,6 @@ const CanvasWrapper = styled.section`
 `;
 
 export const Canvas = () => {
-
   const [mouseData, setMouseData] = useState({ x: 0, y: 0 });
   const [canvasCTX, setCanvasCTX] = useState<CanvasRenderingContext2D | null>(
     null,
@@ -18,62 +17,34 @@ export const Canvas = () => {
     document.getElementById("canvas") as HTMLCanvasElement,
   );
 
-  const { colour, size, opacity } = useContext(BrushContext);
+  const { colour, setColour, size, setSize } = useContext(BrushContext);
 
-  var isDown = false;
-const points = useRef<any[]>([]);
-  
-  
-  function onMouseDown(event: MouseEvent) {
-    var point = getCanvasPointOfMouseEvent(event);
-      points.current.push(point); // store
-      redrawAll(); // clearAll and redraw
-      isDown = true; // make it last so we can grab the isStart below
-  }
-  
-  function onMouseMove(event: MouseEvent) {
-      if ( isDown !== false) {
-          var point = getCanvasPointOfMouseEvent(event);
-          points.current.push({x: event.clientX, y: event.clientY, isStart: !isDown}); // store
-          redrawAll(); // clear all and redraw
-      }
-  }
-  function redrawAll() {
-    // clear all
-    const ctx = canvasCTX!;
-    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
-  ctx.globalAlpha = opacity;
-  ctx.lineWidth = size;
-  ctx.strokeStyle = colour;
-  ctx.lineJoin = 'round';
-
-  ctx.beginPath();
-  points.current.forEach(function(pt) {
-    if(pt.isStart){
-      ctx.stroke(); // draw previous
-      ctx.beginPath(); // begin a new sub-path
-    }
-    ctx.lineTo(pt.x, pt.y * 0.8 ); // will moveTo automatically if needed
-  });
-  ctx.stroke();
-  }
-  
-  function onMouseUp(e: MouseEvent) {
-      isDown = false;
-  }
-
-  function getCanvasPointOfMouseEvent(event: MouseEvent) {
-
-    var canvasX = (event.pageX);
-    var canvasY = (event.pageY );
-
-    return {x: canvasX, y: canvasY, isStart: !isDown};
-}
-
+  // set position of the mouse
   const SetPos = (e: MouseEvent) => {
-    setMouseData({x: e.clientX, y: e.clientY})
-  }
+    setMouseData({
+      x: e.clientX, // Mouse X position
+      y: e.clientY, // Mouse Y position
+    });
+  };
 
+  const Draw = (e: MouseEvent) => {
+    if (e.buttons !== 1) return;
+    const ctx = canvasCTX; // Our saved context
+    ctx!.beginPath(); // Start the line
+
+    setMouseData({
+      x: e.clientX,
+      y: e.clientY, // off set for margins
+    });
+    ctx!.moveTo(mouseData.x, mouseData.y * 0.8); // Move the line to the saved mouse location
+    ctx!.lineTo(e.clientX, e.clientY * 0.8); // off set for margins
+
+    ctx!.strokeStyle = colour; // Set the color as the saved state
+    ctx!.lineWidth = size; // Set the size to the saved state
+    // Set the line cap to round
+    ctx!.lineCap = "round";
+    ctx!.stroke(); // Draw it!
+  };
 
   // Set the canvas ctx as the state
   useEffect(() => {
@@ -88,10 +59,12 @@ const points = useRef<any[]>([]);
     <CanvasWrapper>
       <DrawingArea
         ref={canvasRef}
-       // onMouseEnter={(e: MouseEvent) => SetPos(e)}
-        onMouseMove={(e: MouseEvent) => onMouseMove(e)}
-        onMouseDown={(e: MouseEvent) =>  onMouseDown(e)}
-        onMouseUp={(e: MouseEvent) => onMouseUp(e)}
+        onMouseEnter={(e: MouseEvent) => SetPos(e)}
+        onMouseMove={(e: MouseEvent) => {
+          SetPos(e);
+          Draw(e);
+        }}
+        onMouseDown={(e: MouseEvent) => SetPos(e)}
       />
     </CanvasWrapper>
   );

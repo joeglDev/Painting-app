@@ -1,4 +1,4 @@
-import { ChangeEvent, useContext, useState } from "react";
+import { ChangeEvent, useContext } from "react";
 import { BrushContext } from "../context/BrushContext";
 import { styled } from "styled-components";
 
@@ -15,44 +15,32 @@ const BrushSettingsUl = styled.ul`
   list-style-type: none;
   align-items: center;
   justify-content: space-evenly;
-  gap: 5vh;
+  gap: 2rem;
 `;
 
 const BrushSettingsLabel = styled.label`
-  min-width: 5vw;
+  min-width: 75px;
   display: inline-block;
 `;
 
 const BrushSettingsLi = styled.li`
-  margin: 0 2vw 0 0;
+  margin: 0 1.2rem 0 0;
 `;
-
-const BrushSettingsInput = styled.input`
-position: relative;
-width: 8vw;
-`; 
 
 const H2 = styled.h2`
   text-align: center;
 `;
 
 export const BrushSettings = () => {
-  const { colour, setColour, size, setSize, setOpacity } = useContext(BrushContext);
-  const [displayOpacity, setDisplayOpacity] = useState('1.00');
-
- const onChangeOpacity = (e: ChangeEvent<HTMLInputElement>) => {
-  setDisplayOpacity(e.target.value);
- if (/\d+$/.test(e.target.value)) setOpacity(parseFloat(e.target.value));
- };  
+  const { colour, setColour, size, setSize } = useContext(BrushContext);
 
   return (
     <BrushSettingsWrapper>
       <H2>Brush settings</H2>
       <BrushSettingsUl>
-
         <BrushSettingsLi>
           <BrushSettingsLabel htmlFor="size-input">Size: </BrushSettingsLabel>
-          <BrushSettingsInput
+          <input
             type="number"
             value={size}
             id="number-input"
@@ -60,21 +48,12 @@ export const BrushSettings = () => {
               setSize(parseInt(e.target.value))
             }
           />
-        
-          </BrushSettingsLi>
-
-          <BrushSettingsLi>
-          <BrushSettingsLabel htmlFor="opacity-input">Opacity: </BrushSettingsLabel>
-          <BrushSettingsInput type="number" value={displayOpacity} id="opacity-input" min="0" max="1" step="0.01"
-          onChange={onChangeOpacity}
-          ></BrushSettingsInput>
         </BrushSettingsLi>
-
         <BrushSettingsLi>
           <BrushSettingsLabel htmlFor="colour-input">
             Colour:{" "}
           </BrushSettingsLabel>
-          <BrushSettingsInput
+          <input
             type="color"
             value={colour}
             id="colour-input"
