@@ -17,16 +17,16 @@ export const Canvas = () => {
     document.getElementById("canvas") as HTMLCanvasElement,
   );
 
-  const { colour, size } = useContext(BrushContext);
+  const { colour, size, savedCanvas, setSavedCanvas, loadCanvas } = useContext(BrushContext);
 
-  const SetPos = (e: MouseEvent) => {
+  const setPos = (e: MouseEvent) => {
     setMousePosition({
       x: e.clientX,
       y: e.clientY,
     });
   };
 
-  const Draw = (e: MouseEvent) => {
+  const draw = (e: MouseEvent) => {
     if (e.buttons !== 1) return;
     const ctx = canvasCTX!;
     ctx!.beginPath(); // Start the line
@@ -47,25 +47,28 @@ export const Canvas = () => {
     ctx!.stroke();
   };
 
+  const saveCanvasContext = () => setSavedCanvas(canvasRef.current);
+
   // Set the canvas ctx as the state
   useEffect(() => {
-    const canvas = canvasRef.current;
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth * 0.8;
-    canvas.height = window.innerHeight * 0.8;
-    setCanvasCTX(ctx);
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext("2d");
+      canvas.width = window.innerWidth * 0.8;
+      canvas.height = window.innerHeight * 0.8;
+      setCanvasCTX(ctx);
   }, [canvasRef]);
 
   return (
     <CanvasWrapper>
       <DrawingArea
         ref={canvasRef}
-        onMouseEnter={(e: MouseEvent) => SetPos(e)}
+        onMouseEnter={(e: MouseEvent) => setPos(e)}
         onMouseMove={(e: MouseEvent) => {
-          SetPos(e);
-          Draw(e);
+          setPos(e);
+          draw(e);
         }}
-        onMouseDown={(e: MouseEvent) => SetPos(e)}
+        onMouseDown={(e: MouseEvent) => setPos(e)}
+        onMouseUp={(e: MouseEvent) => saveCanvasContext()}
       />
     </CanvasWrapper>
   );
