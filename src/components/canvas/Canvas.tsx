@@ -17,7 +17,8 @@ export const Canvas = () => {
     document.getElementById("canvas") as HTMLCanvasElement,
   );
 
-  const { colour, size, savedCanvas, setSavedCanvas, loadCanvas } = useContext(BrushContext);
+  const { colour, size, savedCanvas, setSavedCanvas, loadCanvas } =
+    useContext(BrushContext);
 
   const setPos = (e: MouseEvent) => {
     setMousePosition({
@@ -51,11 +52,11 @@ export const Canvas = () => {
 
   // Set the canvas ctx as the state
   useEffect(() => {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext("2d");
-      canvas.width = window.innerWidth * 0.8;
-      canvas.height = window.innerHeight * 0.8;
-      setCanvasCTX(ctx);
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+    canvas.width = window.innerWidth * 0.8;
+    canvas.height = window.innerHeight * 0.8;
+    setCanvasCTX(ctx);
   }, [canvasRef]);
 
   return (

@@ -5,8 +5,8 @@ interface defaultValueInterface {
   setColour: (value: string) => void;
   size: number;
   setSize: (value: number) => void;
-  savedCanvas:  HTMLCanvasElement | null;
-  setSavedCanvas: (value:  HTMLCanvasElement | null) => void;
+  savedCanvas: HTMLCanvasElement | null;
+  setSavedCanvas: (value: HTMLCanvasElement | null) => void;
   loadCanvas: boolean;
   setLoadCanvas: (value: boolean) => void;
 }
