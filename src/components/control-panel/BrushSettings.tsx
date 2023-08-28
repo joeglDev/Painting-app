@@ -1,35 +1,12 @@
 import { ChangeEvent, useContext } from "react";
 import { BrushContext } from "../context/BrushContext";
-import { styled } from "styled-components";
-
-const BrushSettingsWrapper = styled.article`
-  margin: 1rem;
-  background-color: #828282;
-  position: relative;
-  height: 30vh;
-`;
-
-const BrushSettingsUl = styled.ul`
-  display: flex;
-  flex-direction: column;
-  list-style-type: none;
-  align-items: center;
-  justify-content: space-evenly;
-  gap: 2rem;
-`;
-
-const BrushSettingsLabel = styled.label`
-  min-width: 75px;
-  display: inline-block;
-`;
-
-const BrushSettingsLi = styled.li`
-  margin: 0 1.2rem 0 0;
-`;
-
-const H2 = styled.h2`
-  text-align: center;
-`;
+import {
+  BrushSettingsLabel,
+  BrushSettingsLi,
+  BrushSettingsUl,
+  BrushSettingsWrapper,
+  H2,
+} from "./BrushSettings.style";
 
 export const BrushSettings = () => {
   const { colour, setColour, size, setSize } = useContext(BrushContext);
